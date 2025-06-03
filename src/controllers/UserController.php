@@ -1,10 +1,12 @@
 <?php
-    require_once '../models/user.php';
+
+    namespace App\Controllers;
+    use App\Models\UserModel;
 
     class UserController{
-        private User $model;
+        private UserModel $model;
 
-        public function __construct(City $model) {
+        public function __construct(UserModel $model) {
             $this->model = $model;
         }
 

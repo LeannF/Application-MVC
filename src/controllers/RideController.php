@@ -1,17 +1,30 @@
 <?php
-    require_once '../models/ride.php';
 
+    namespace App\Controllers;
+    use App\Models\RideModel;
+
+    /**
+     * controller for the ride's table
+     * 
+     * functions to see, add, edit and delete from the table 
+    */
     class RideController{
-        private $model;
+        private RideModel $model;
 
         public function __construct(RideModel $model) {
             $this->model = $model;
         }
 
         public function getRides(){
-            $rides = $this->model->getAllRide(); //appel du modèle
-            header('Content-Type: application/json'); // HTTP response
-            echo json_encode($rides); //sending data to client
+            $rides = $this->model->getAllRide(); 
+            header('Content-Type: application/json'); 
+            echo json_encode($rides); 
+        }
+
+        public function getRideByAvailableSeats(){
+            $rides = $this->model->getRideByAvailableSeats();
+            header('Content-Type: application/json'); 
+            echo json_encode($rides); 
         }
 
         public function addRide(){

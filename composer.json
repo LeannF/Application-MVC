@@ -18,5 +18,18 @@
         "allow-plugins": {
             "phpdocumentor/shim": true
         }
+    },
+    "require-dev": {
+        "phpstan/phpstan": "*",
+        "phpunit/phpunit": "^11.5"
+    },
+    "scripts": {
+        "test": "phpunit unit_test",
+        "analyse": "phpstan analyse src"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src"
+        }
     }
 }

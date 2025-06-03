@@ -1,20 +1,35 @@
 <?php
-    require_once '../models/agency.php';
 
+    namespace App\Controllers;
+    use App\Models\AgencyModel;
+
+    /**
+     * controller for the agency's table
+     * 
+     * functions to see, add, edit and delete from the table 
+    */
     class AgencyController{
-        private $model;
+        private AgencyModel $model;
 
         public function __construct(AgencyModel $model) {
             $this->model = $model;
         }
 
         public function getAgencies(){
-            $agencies = $this->model->getAllAgency(); //appel du modèle
-            header('Content-Type: application/json'); // HTTP response
-            echo json_encode($agencies); //sending data to client
+
+            /** call the model */
+            $agencies = $this->model->getAllAgency(); 
+
+            /** HTTP response */
+            header('Content-Type: application/json'); 
+
+            /** sendind data to the client */
+            echo json_encode($agencies);
         }
 
         public function addAgency(){
+
+            /** stock data send by the client in HTPP resquest*/
             $data = json_decode(file_get_contents("php://input"), true);
 
             if ($this->model->addAgency($data)) {

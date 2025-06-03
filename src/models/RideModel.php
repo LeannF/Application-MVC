@@ -6,10 +6,10 @@
     //modif 
     // ne pas afficher trajets depasses
 
-    namespace Models;
+    namespace App\Models;
     use PDO;
 
-    class Ride {
+    class RideModel {
         private PDO $db;
 
         public function __construct(PDO $db) {

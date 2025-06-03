@@ -1,9 +1,9 @@
 <?php 
 
-    namespace Models;
+    namespace App\Models;
     use PDO;
 
-    class User {
+    class UserModel {
         private PDO $db;
 
         public function __construct(PDO $db) {
