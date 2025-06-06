@@ -1,12 +1,12 @@
 --
--- Base de données : `klaxon`
+-- Database : `klaxon`
 --
 DROP DATABASE IF EXISTS `Klaxon`;
 CREATE DATABASE IF NOT EXISTS `Klaxon`;
 USE `Klaxon`;
 
 
--- Suppression des tables dans le bon ordre
+-- DROP TABLE IN ORDER
 
 DROP TABLE IF EXISTS `user`;
 DROP TABLE IF EXISTS `ride`;
@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS `agency`;
 
 
 --
--- Structure de la table agency
+-- AGENCY TABLE
 --
 
 CREATE TABLE IF NOT EXISTS `agency` (
@@ -25,25 +25,27 @@ CREATE TABLE IF NOT EXISTS `agency` (
 );
 
 --
--- Structure de la table ride
+-- RIDE TABLE
 --
 
 CREATE TABLE IF NOT EXISTS `ride` (
     `id_ride` INT AUTO_INCREMENT,
-    `id_agency_departure` INT NOT NULL,
-    `id_agency_arrival` INT NOT NULL,
-    `departure_time` DATETIME NOT NULL,
-    `arrival_time` DATETIME NOT NULL,
+    `id_agency_departure` INT ,
+    `departure_date` DATE NOT NULL,
+    `departure_time` TIME NOT NULL,
+    `id_agency_arrival` INT,
+    `arrival_date` DATE,
+    `arrival_time` TIME,
     `total_seat` INT NOT NULL,
     `available_seat` INT NOT NULL,
-    `contact` VARCHAR(50) NOT NULL,
+    `id_user` INT,
     PRIMARY KEY (`id_ride`),
     FOREIGN KEY (`id_agency_departure`) REFERENCES agency(`id_agency`) ON DELETE CASCADE,
     FOREIGN KEY (`id_agency_arrival`) REFERENCES agency(`id_agency`) ON DELETE CASCADE
 );
 
 --
--- Structure de la table user
+-- USER TABLE
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
