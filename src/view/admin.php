@@ -1,7 +1,7 @@
-<main class="text-center">
-    <h2>Pour obtenir plus d'informations sur un trajet, veuillez vous connecter</h2>
+<div>
+    <h2>Pannel Admin</h2>
     <table>
-        <thead>
+        <thead class="bg-dark">
             <tr class="bg-dark">
                 <td>Départ</td>
                 <td>Date</td>
@@ -47,4 +47,4 @@
             <?php endforeach;?>
         </tbody>                
     </table>
-</main>
+</div>

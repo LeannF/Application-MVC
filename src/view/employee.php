@@ -1,8 +1,8 @@
-<main>
-    <h2>Pour obtenir plus d'informations sur un trajet, veuillez vous connecter</h2>
+<div>
+    <h2>Trajets proposés</h2>
     <table>
         <thead>
-            <tr class="bg-dark">
+            <tr>
                 <td>Départ</td>
                 <td>Date</td>
                 <td>Heure</td>
@@ -46,5 +46,5 @@
                 </tr>
             <?php endforeach;?>
         </tbody>                
-    </table> 
-</main>
+    </table>
+</div>
