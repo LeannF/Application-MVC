@@ -25,7 +25,7 @@
     },
     "scripts": {
         "test": "phpunit unit_test",
-        "analyse": "phpstan analyse src"
+        "analyse": "phpstan analyse src unit_test"
     },
     "autoload": {
         "psr-4": {

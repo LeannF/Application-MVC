@@ -1,6 +1,7 @@
 <?php
 
     namespace App\Controllers;
+    use App\Config\Database;
     use App\Models\AgencyModel;
 
     /**
@@ -12,7 +13,8 @@
         private AgencyModel $model;
 
         public function __construct(AgencyModel $model) {
-            $this->model = $model;
+            $pdo = Database::getInstance();
+            $this->model = new AgencyModel($pdo);
         }
 
         public function getAgencies(){
@@ -41,9 +43,9 @@
             }           
         }
 
-        public function editAgency(){
+        public function editAgency($id){
             $data = json_decode(file_get_contents("php://input"), true);
-
+             
             if ($this->model->editAgency($id, $data)) {
                 echo json_encode(['message' => 'Agency edited successfully']);
             } else {
