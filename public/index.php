@@ -20,6 +20,7 @@
     ]);
 
     /** add routes */
+    require_once __DIR__ . '/../src/routes/home.php';
     require_once __DIR__ . '/../src/routes/user.php';
     require_once __DIR__ . '/../src/routes/agency.php';
     require_once __DIR__ . '/../src/routes/ride.php';

@@ -21,8 +21,33 @@
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
+        public function getOneRide(int $id){
+            $stmt = $this->db->query("SELECT * FROM ride WHERE id_ride = :id");
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
         public function getRidesByAvailableSeats(){
             $stmt = $this->db->query("SELECT * FROM ride WHERE available_seat > 0 AND CONCAT(departure_date, '', departure_time) > NOW() ORDER BY departure_date, departure_time ASC");
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function getRidesWithAgencyName(){
+            $sql = "
+                SELECT
+                    r.id_ride,
+                    r.departure_date,
+                    r.departure_time,
+                    r.arrival_date,
+                    r.arrival_time,
+                    r.total_seat,
+                    r.available_seat,
+                    ad.city as departure_city,
+                    aa.city as arrival_city
+                FROM ride r
+                JOIN agency ad ON r.id_agency_departure = ad.id_agency
+                JOIN agency aa ON r.id_agency_arrival = aa.id_agency
+            ";
+            $stmt = $this->db->query($sql);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 

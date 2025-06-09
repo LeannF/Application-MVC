@@ -1,0 +1,33 @@
+// Route to bootstrap 
+@import '../../node_modules/bootstrap/scss/bootstrap';
+
+
+body {
+  max-width: 80%;
+  margin: auto;
+}
+
+nav{
+  border: 1px solid black;
+  margin: 2em;
+}
+
+button{
+  color: white;
+  background-color: black;
+}
+
+a {
+  list-style: none;
+  text-decoration: none;
+  color: white;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+thead {
+  color: white;
+}
