@@ -29,6 +29,12 @@
             echo json_encode($rides); 
         }
 
+        public function getOneRide($id){
+            $ride = $this->rideModel->getOneRide(); 
+            header('Content-Type: application/json'); 
+            echo json_encode($ride); 
+        }
+
         public function addRide(){
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $id_agency_departure = $_POST['id_agency_departure'];
