@@ -16,7 +16,6 @@
             $uModel = new UserModel($pdo);
             $users = $uModel->getAllUser();
             $role = $_SESSION['user']['role'] ?? 'guest';
-            echo $role;
 
             $rModel = new RideModel($pdo);
             $rides = $rModel->getRidesWithAgencyName();

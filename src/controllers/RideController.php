@@ -40,9 +40,6 @@
                 $id_agency_departure = $_POST['id_agency_departure'];
                 $id_agency_arrival = $_POST['id_agency_arrival'];
 
-                $id_agency_departure = $this->rideModel->getAgencyIdByCity($id_agency_departure);
-                $id_agency_arrival = $this->rideModel->getAgencyIdByCity($id_agency_arrival);
-
                 if ($id_agency_departure === null || $id_agency_arrival === null) {
                     echo "Ville de départ ou d'arrivée inconnue";
                     return;
@@ -50,31 +47,22 @@
 
                 $data = [
                     'id_user' => $_SESSION['user']['id_user'],
-                    'id_agency_departure' => $id_departure,
+                    'id_agency_departure' => $id_agency_departure,
                     'departure_date' => $_POST['departure_date'],
                     'departure_time' => $_POST['departure_time'],
-                    'id_agency_arrival' => $id_arrival,
+                    'id_agency_arrival' => $id_agency_arrival,
                     'arrival_date' => $_POST['arrival_date'],
                     'arrival_time' => $_POST['arrival_time'],
                     'available_seat' => $_POST['available_seat']
                 ];
                 $succes = $this->rideModel->addRide($data);
                 if ($succes) {
-                    $header("Location: /rides?success=1");
+                    header("Location: /");
+                    exit;
                 } else {
-                    echo "Error during addin ride";
+                    echo "Error during adding ride";
                 }               
-            }
-
-            $data = json_decode(file_get_contents("php://input"), true);
-
-            if ($this->rideModel->addRide($data)) {
-                http_response_code(200);
-                echo json_encode(['message' => 'Ride added successfully']);
-            } else {
-                http_response_code(500);
-                echo json_encode(['message' => 'Failed to add ride']);
-            }           
+            }    
         }
 
         public function editRide($id){
@@ -88,14 +76,18 @@
             }
         }
 
-        public function deleteRide($id){
-            if ($this->rideModel->deleteRide($id)) {
-                http_response_code(200);
-                echo json_encode(['message' => 'Ride deleted successfully']);
-            } else {
-                http_response_code(500);
-                echo json_encode(['message' => 'Failed to delete ride']);
-            }            
+        public function deleteRide() {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_ride'])) {
+                $id = (int) $_POST['id_ride'];
+                $success = $this->rideModel->deleteRideById($id);
+
+                if ($success) {
+                    header('Location: /');
+                } else {
+                    echo "Erreur lors de la suppression";
+                }
+                exit;
+            }
         }
     }
 ?>

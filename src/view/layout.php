@@ -24,7 +24,7 @@
                 }
             ?>
         </main>
-        <footer class="position-absolute bottom-50 translate-middle">© 2024 - CENEF - MVC PHP</footer>
+        <footer class="position-absolute bottom-0 start-50 translate-middle">© 2024 - CENEF - MVC PHP</footer>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

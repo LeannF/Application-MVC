@@ -7,9 +7,19 @@ body {
   margin: auto;
 }
 
+h1{
+  font-size: 1.5em;
+  text-align: left;
+}
+
 nav{
   border: 1px solid black;
   margin: 2em;
+}
+
+.table-btn{
+  background-color: none;
+  color: none;
 }
 
 button{
@@ -23,11 +33,22 @@ a {
   color: white;
 }
 
-table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
+table{
+  width: 90%;
+  margin: auto;
+  margin-top: 2em;
 }
 
-thead {
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;  
+}
+
+td{
+  padding: 0.2em 0 0.2em;
+}
+
+thead{
+  background-color: black;
   color: white;
 }

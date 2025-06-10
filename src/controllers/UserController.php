@@ -14,7 +14,7 @@
         }
 
         public function getUsers(){
-            $users = $this->userModel->getAllUser(); //appel du modèle
+            $users = $this->userModel->getAllUser(); 
             header('Content-Type: application/json'); // HTTP response
             echo json_encode($users); //sending data to client
         }
@@ -28,16 +28,18 @@
                 if ($user && password_verify($password, $user['password'])) {
                     session_start();
                     $_SESSION['user'] = [
-                        'id' => $user['id_user'],
+                        'id_user' => $user['id_user'],
+                        'firstname' => $user['firstname'],
+                        'lastname' => $user['lastname'],
                         'email' => $user['email'],
                         'role' => $user['role']
                     ];
-                    header('Location: /');  // redirige vers la page d’accueil avec message
+                    header('Location: /');  /** Redirect to home page */
                     exit;
                 } else {
                     // Gérer l’erreur (par exemple stocker un message dans $_SESSION ou autre)
                     $_SESSION['error'] = "Email ou mot de passe incorrect";
-                    header('Location: /');  // redirige vers la page d’accueil avec message
+                    header('Location: /');  
                     exit;
                 }
             }

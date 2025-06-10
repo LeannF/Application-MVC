@@ -97,7 +97,7 @@
             ]);
         }
 
-        public function deleteRide(int $id): bool{
+        public function deleteRideById(int $id): bool{
             $stmt = $this->db->prepare("DELETE FROM ride WHERE id_ride = :id");
             return $stmt->execute([':id' => $id]);
         }
