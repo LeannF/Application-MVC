@@ -11981,6 +11981,9 @@ body {
 
 h1, .h1 {
   font-size: 1.5em;
+}
+
+h2, .h2 {
   text-align: left;
 }
 
@@ -12023,4 +12026,12 @@ td {
 thead {
   background-color: black;
   color: white;
+}
+
+label {
+  text-align: start;
+}
+
+.admin-section {
+  display: none;
 }/*# sourceMappingURL=style.css.map */

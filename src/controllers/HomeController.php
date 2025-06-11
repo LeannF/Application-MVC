@@ -8,7 +8,6 @@
 
     class HomeController{
         public function index(){           
-            session_start();
             $pdo = Database::getInstance();
             $aModel = new AgencyModel($pdo);
             $agencies = $aModel->getAllAgency();
@@ -18,7 +17,8 @@
             $role = $_SESSION['user']['role'] ?? 'guest';
 
             $rModel = new RideModel($pdo);
-            $rides = $rModel->getRidesWithAgencyName();
+            $rides = $rModel->getRidesByAvailableSeats();
+            $adminRide = $rModel->getAllRide();
             if (!isset($rides)) {
                 $rides = [];
             }
@@ -30,14 +30,14 @@
 
             switch ($role) {
                 case 'admin':
-                    $view = __DIR__ . '/../view/admin.php';
+                    $view = __DIR__ . '/../view/pages/admin.php';
                 break;
                 case 'employee':
-                    $view = __DIR__ . '/../view/employee.php';
+                    $view = __DIR__ . '/../view//pages/employee.php';
                 break;
 
                 default :
-                    $view = __DIR__ . '/../view/guest.php';
+                    $view = __DIR__ . '/../view//pages/guest.php';
                 break;
             }
             require_once __DIR__ . '/../view/layout.php';

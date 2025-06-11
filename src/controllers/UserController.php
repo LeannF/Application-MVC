@@ -26,13 +26,13 @@
                 $user = $this->userModel->getUserByEmail($email);
 
                 if ($user && password_verify($password, $user['password'])) {
-                    session_start();
                     $_SESSION['user'] = [
                         'id_user' => $user['id_user'],
                         'firstname' => $user['firstname'],
                         'lastname' => $user['lastname'],
                         'email' => $user['email'],
-                        'role' => $user['role']
+                        'role' => $user['role'],
+                        'id_ride'  => $user['id_ride']
                     ];
                     header('Location: /');  /** Redirect to home page */
                     exit;
@@ -46,7 +46,6 @@
         }
 
         public function logout(){
-            session_start();
             $_SESSION = [];
             session_destroy();
             header('Location: /');
