@@ -1,6 +1,7 @@
 <?php
     namespace App\Controllers;
 
+
     use App\Models\UserModel;
     use App\Models\RideModel;
     use App\Models\AgencyModel;
@@ -18,7 +19,8 @@
 
             $rModel = new RideModel($pdo);
             $rides = $rModel->getRidesByAvailableSeats();
-            $adminRide = $rModel->getAllRide();
+            $adminRide = $rModel->getAllRide();     
+
             if (!isset($rides)) {
                 $rides = [];
             }
@@ -27,12 +29,23 @@
             if ($id) {
                 $oneRide = $rModel->getOneRide((int)$id);
             }
+            $ridesWithUsers = [];
+
+
 
             switch ($role) {
                 case 'admin':
                     $view = __DIR__ . '/../view/pages/admin.php';
                 break;
+
                 case 'employee':
+                    foreach ($rides as $ride) {    
+                        $userRide = $uModel->getUserById($ride['id_user']);
+                        $ridesWithUsers[] = [
+                            'ride' => $ride,
+                            'user' => $userRide
+                        ];
+                    }
                     $view = __DIR__ . '/../view//pages/employee.php';
                 break;
 

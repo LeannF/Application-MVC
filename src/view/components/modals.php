@@ -82,13 +82,14 @@
     <div class="modal-dialog">
         <div class="modal-content">
              <form action="/agency/edit" method="post">
+                <input type="hidden" name="id_agency" id="edit-agency-id" value="<?= $agency['id_agency'] ?>">
                 <div class="modal-header">
                     <h2 class="modal-title" id="createAgencyModalLabel">Modification de ville</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="city" class="form-label">Ville à modifier</label>
+                        <label for="city" class="form-label">Nouvelle Ville</label>
                         <input type="text" class="form-control" id="city" name="city" required>
                     </div>
                 </div>

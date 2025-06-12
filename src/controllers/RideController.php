@@ -53,8 +53,27 @@
                     'id_agency_arrival' => $id_agency_arrival,
                     'arrival_date' => $_POST['arrival_date'],
                     'arrival_time' => $_POST['arrival_time'],
+                    'total_seat' => $_POST['total_seat'],
                     'available_seat' => $_POST['available_seat']
                 ];
+
+                if ($data['id_agency_departure'] === $data['id_agency_arrival']) {
+                        http_response_code(400);
+                        echo json_encode(['message' => 'Departure city and arrival city must be different']);
+                        return;
+                    }
+
+                    // Validation date/heure arrivée > date/heure départ
+                    $departureDateTime = strtotime($data['departure_date'] . ' ' . $data['departure_time']);
+                    $arrivalDateTime = strtotime($data['arrival_date'] . ' ' . $data['arrival_time']);
+
+                if ($arrivalDateTime <= $departureDateTime) {
+                    http_response_code(400);
+                    echo json_encode(['message' => 'Date and arrival time must be before after date and arrival time']);
+                    return;
+                }
+                
+
                 $succes = $this->rideModel->addRide($data);
                 if ($succes) {
                     header("Location: /");
@@ -65,14 +84,57 @@
             }    
         }
 
-        public function editRide($id){
-            $data = json_decode(file_get_contents("php://input"), true);
+        public function editRide(){            
+            $possibleFields = [
+                'id_agency_departure',
+                'departure_date',
+                'departure_time',
+                'id_agency_arrival',
+                'arrival_date',
+                'arrival_time',
+                'available_seat'
+            ];
+            $data = [];
+            foreach ($possibleFields as $field) {
+                if (isset($_POST[$field]) && $_POST[$field] !== '' && $_POST[$field] !== 'Ville de départ' && $_POST[$field] !== 'Ville d\'arrivée') {
+                    $data[$field] = $_POST[$field];
+                }
+            }
+            $id = $_POST['id_ride'] ?? null;
+
+            if ($data['id_agency_departure'] === $data['id_agency_arrival']) {
+                http_response_code(400);
+                echo json_decode(['message' => "Departure city and arrival city must be different"]);
+                return;
+            }
+
+            // Validation date/heure arrivée > date/heure départ
+            $departureDateTime = strtotime($data['departure_date'] . ' ' . $data['departure_time']);
+            $arrivalDateTime = strtotime($data['arrival_date'] . ' ' . $data['arrival_time']);
+
+            if ($arrivalDateTime <= $departureDateTime) {
+                http_response_code(400);
+                echo json_decode(['message' => "Date and arrival time must be before after date and arrival time"]);
+                return;
+            }
+
+            if (!$id) {
+                http_response_code(400);
+                echo json_encode(['message' => 'Missing ride ID']);
+                return;
+            }
+
+           if (empty($data)) {
+                http_response_code(400);
+                echo json_encode(['message' => 'No data to update']);
+                return;
+            }
 
             if ($this->rideModel->editRide($id, $data)) {
-                echo json_encode(['message' => 'Ride edited successfully']);
+                header("Location: /");
             } else {
                 http_response_code(500);
-                echo json_encode(['message' => 'Failed to edit ride']);
+                echo json_encode(['message' => 'Failed to update ride']);
             }
         }
 

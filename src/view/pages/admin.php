@@ -38,9 +38,7 @@
 </div>
 
 <div id="agencies" class="table-section" style="display: none;">
-    <form action="/agency/add" method="post">
-        <button data-bs-toggle='modal' data-bs-target='#createAgencyModal'>Ajouter une ville</button>
-    </form>
+    <button data-bs-toggle='modal' data-bs-target='#createAgencyModal'>Ajouter une ville</button>
     <table>
         <thead>
             <tr>
@@ -53,7 +51,7 @@
                 <tr >
                     <td><?= htmlspecialchars($agency['city']) ?></td>
                     <td>
-                        <button class="" data-bs-toggle='modal' data-bs-target='#editAgencyModal'>
+                        <button class="edit-btn" data-id="<?= $agency['id_agency'] ?>" data-bs-toggle='modal' data-bs-target='#editAgencyModal'>
                             <i class="bi bi-pencil-square"></i>
                         </button>
                         <form method="post" action="/agency/delete" onsubmit="return confirm('Supprimer cette ville ?');">

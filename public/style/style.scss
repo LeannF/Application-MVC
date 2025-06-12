@@ -1,6 +1,3 @@
-// Route to bootstrap 
-@import '../../node_modules/bootstrap/scss/bootstrap';
-
 
 body {
   max-width: 80%;
@@ -60,6 +57,6 @@ label{
   text-align: start;
 }
 
-.admin-section{
-  display: none;
+#rides table{
+  width: 100%;
 }

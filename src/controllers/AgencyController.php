@@ -31,14 +31,14 @@
 
         public function addAgency(){
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $city = $_POST['city'] ?? null;
+                $data = ['city' => $_POST['city']];
 
-                if (!$city) {
+                if (!$data) {
                     echo "Aucune ville reçue";
                     return;
                 }
 
-                $success = $this->agencyModel->addAgency($city);
+                $success = $this->agencyModel->addAgency($data);
                 if ($success) {
                     header("Location: /");
                     exit;
@@ -48,11 +48,21 @@
             }     
         }
 
-        public function editAgency($id){
-            $data = json_decode(file_get_contents("php://input"), true);
+        public function editAgency(){
+            $id = $_POST['id_agency'] ?? null;
+            $city = $_POST['city'] ?? null;
+
+            if (!$id) {
+                http_response_code(400);
+                echo json_encode(['message' => 'Missing agency ID']);
+                return;
+            }
+
+            $data = ['city' => $city];
+
              
             if ($this->agencyModel->editAgency($id, $data)) {
-                echo json_encode(['message' => 'Agency edited successfully']);
+                header('Location: /');
             } else {
                 http_response_code(500);
                 echo json_encode(['message' => 'Failed to edit Agency']);

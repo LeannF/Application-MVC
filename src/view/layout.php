@@ -13,6 +13,9 @@
         </header>
         <main class="text-center">
            <?php
+                $ridesWithUsers = $ridesWithUsers ?? [];
+                $rides = $rides ?? [];
+                $users = $users ?? [];
                 if (isset($view)) {
                     if (file_exists($view)) {
                         include $view;

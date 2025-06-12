@@ -19,6 +19,26 @@
             echo json_encode($users); //sending data to client
         }
 
+        public function getUsersById(){
+            header('Content-Type: application/json');
+
+            $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+            if ($id <= 0) {
+                http_response_code(400);
+                echo json_encode(['error' => 'ID utilisateur invalide']);
+                exit;
+            }
+
+            $user = $this->userModel->getUserById($id);
+            if ($user) {
+                echo json_encode($user);
+            } else {
+                http_response_code(404);
+                echo json_encode(['error' => 'Utilisateur non trouvé']);
+            }
+        }
+
         public function login() {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $email = $_POST['email'] ?? '';

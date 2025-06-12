@@ -121,8 +121,12 @@
                         <input type="time" class="form-control" id="arrival_time" name="arrival_time" required>
                     </div>
                     <div class="mb-3">
+                        <label for="total_seat" class="form-label">Nombre total de place</label>
+                        <input type="number" min="0" class="form-control" id="total_seat" name="total_seat" required>
+                    </div>
+                    <div class="mb-3">
                         <label for="available_seat" class="form-label">Places disponibles</label>
-                        <input type="number" class="form-control" id="available_seat" name="available_seat" required>
+                        <input type="number" class="form-control" min="0" id="available_seat" name="available_seat" required>
                     </div>
                 </div>
                 <div class="modal-footer">
