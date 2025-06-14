@@ -1,6 +1,10 @@
 <?php
-    ini_set('display errors', 1);
-    error_reporting(E_ALL);
+    session_start();
+    ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/errorLog.log'); // Log in your project folder
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 
     /** loading composer's autoloader */

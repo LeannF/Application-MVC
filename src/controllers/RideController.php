@@ -3,6 +3,7 @@
     namespace App\Controllers;
     use App\Config\Database;
     use App\Models\RideModel;
+    use App\helper\Flash;
 
     /**
      * controller for the ride's table
@@ -40,9 +41,6 @@
                 $id_agency_departure = $_POST['id_agency_departure'];
                 $id_agency_arrival = $_POST['id_agency_arrival'];
 
-                $id_agency_departure = $this->rideModel->getAgencyIdByCity($id_agency_departure);
-                $id_agency_arrival = $this->rideModel->getAgencyIdByCity($id_agency_arrival);
-
                 if ($id_agency_departure === null || $id_agency_arrival === null) {
                     echo "Ville de départ ou d'arrivée inconnue";
                     return;
@@ -50,52 +48,112 @@
 
                 $data = [
                     'id_user' => $_SESSION['user']['id_user'],
-                    'id_agency_departure' => $id_departure,
+                    'id_agency_departure' => $id_agency_departure,
                     'departure_date' => $_POST['departure_date'],
                     'departure_time' => $_POST['departure_time'],
-                    'id_agency_arrival' => $id_arrival,
+                    'id_agency_arrival' => $id_agency_arrival,
                     'arrival_date' => $_POST['arrival_date'],
                     'arrival_time' => $_POST['arrival_time'],
+                    'total_seat' => $_POST['total_seat'],
                     'available_seat' => $_POST['available_seat']
                 ];
+
+                // Validation arrival date/hour > departure date/hour 
+                if ($data['id_agency_departure'] === $data['id_agency_arrival']) {
+                        http_response_code(400);
+                        echo json_encode(['message' => 'Departure city and arrival city must be different']);
+                        return;
+                    }
+
+                    $departureDateTime = strtotime($data['departure_date'] . ' ' . $data['departure_time']);
+                    $arrivalDateTime = strtotime($data['arrival_date'] . ' ' . $data['arrival_time']);
+
+                if ($arrivalDateTime <= $departureDateTime) {
+                    http_response_code(400);
+                    echo json_encode(['message' => 'Date and arrival time must be before after date and arrival time']);
+                    return;
+                }       
+
                 $succes = $this->rideModel->addRide($data);
                 if ($succes) {
-                    $header("Location: /rides?success=1");
+                    Flash::set('success', 'Ride ajoutée avec succès !');
+                    header("Location: /");
+                    exit;
                 } else {
-                    echo "Error during addin ride";
+                    echo "Error during adding ride";
                 }               
-            }
-
-            $data = json_decode(file_get_contents("php://input"), true);
-
-            if ($this->rideModel->addRide($data)) {
-                http_response_code(200);
-                echo json_encode(['message' => 'Ride added successfully']);
-            } else {
-                http_response_code(500);
-                echo json_encode(['message' => 'Failed to add ride']);
-            }           
+            }    
         }
 
-        public function editRide($id){
-            $data = json_decode(file_get_contents("php://input"), true);
+        /** edit ride only with user's modifications */
+        public function editRide(){            
+            $possibleFields = [
+                'id_agency_departure',
+                'departure_date',
+                'departure_time',
+                'id_agency_arrival',
+                'arrival_date',
+                'arrival_time',
+                'available_seat'
+            ];
+            $data = [];
+            foreach ($possibleFields as $field) {
+                if (isset($_POST[$field]) && $_POST[$field] !== '' && $_POST[$field] !== 'Ville de départ' && $_POST[$field] !== 'Ville d\'arrivée') {
+                    $data[$field] = $_POST[$field];
+                }
+            }
+            $id = $_POST['id_ride'] ?? null;
+
+            // Vérifie que les 4 champs sont là AVANT de créer les variables et faire la comparaison
+            if (
+                isset($data['departure_date'], $data['departure_time'], $data['arrival_date'], $data['arrival_time'])
+            ) {
+                $departureDateTime = strtotime($data['departure_date'] . ' ' . $data['departure_time']);
+                $arrivalDateTime = strtotime($data['arrival_date'] . ' ' . $data['arrival_time']);
+
+                if ($arrivalDateTime <= $departureDateTime) {
+                    http_response_code(400);
+                    echo json_encode(['message' => "La date/heure d'arrivée doit être après la date/heure de départ."]);
+                    return;
+                }
+            }
+
+            if (!$id) {
+                http_response_code(400);
+                echo json_encode(['message' => 'Missing ride ID']);
+                return;
+            }
+
+           if (empty($data)) {
+                http_response_code(400);
+                echo json_encode(['message' => 'No data to update']);
+                return;
+            }
 
             if ($this->rideModel->editRide($id, $data)) {
-                echo json_encode(['message' => 'Ride edited successfully']);
+                Flash::set('success', 'Trajet modifiée avec succès !');
+                header("Location: /");
+                exit;
             } else {
                 http_response_code(500);
-                echo json_encode(['message' => 'Failed to edit ride']);
+                echo json_encode(['message' => 'Failed to update ride']);
             }
         }
 
-        public function deleteRide($id){
-            if ($this->rideModel->deleteRide($id)) {
-                http_response_code(200);
-                echo json_encode(['message' => 'Ride deleted successfully']);
-            } else {
-                http_response_code(500);
-                echo json_encode(['message' => 'Failed to delete ride']);
-            }            
+        public function deleteRide() {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_ride'])) {
+                $id = (int) $_POST['id_ride'];
+                $success = $this->rideModel->deleteRideById($id);
+
+                if ($success) {
+                    Flash::set('success', 'Trajet supprimée avec succès !');
+                    header('Location: /');
+                    exit;
+                } else {
+                    echo "Erreur lors de la suppression";
+                }
+                exit;
+            }
         }
     }
 ?>

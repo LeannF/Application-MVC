@@ -1,15 +1,25 @@
-// Route to bootstrap 
-@import '../../node_modules/bootstrap/scss/bootstrap';
-
 
 body {
   max-width: 80%;
   margin: auto;
 }
 
+h1{
+  font-size: 1.5em;
+}
+
+h2{
+  text-align: left;
+}
+
 nav{
   border: 1px solid black;
   margin: 2em;
+}
+
+.table-btn{
+  background-color: none;
+  color: none;
 }
 
 button{
@@ -23,11 +33,30 @@ a {
   color: white;
 }
 
-table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
+table{
+  width: 90%;
+  margin: auto;
+  margin-top: 2em;
 }
 
-thead {
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;  
+}
+
+thead{
+  background-color: black;
   color: white;
+}
+
+#users, #agencies{
+  display: none;
+}
+
+.nav-btn.active{
+  background-color: #0074c7;
+}
+
+button, .btn{
+  background-color: #00497c;
 }

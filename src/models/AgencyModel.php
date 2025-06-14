@@ -21,10 +21,10 @@
             ]);
         }
 
-        public function editAgency(int $id_agency, array $data){
-            $stmt = $this->db->prepare("UPDATE agency SET city = :city WHERE id_agency = :id_agency");
+        public function editAgency(int $id, array $data): bool{
+            $stmt = $this->db->prepare("UPDATE agency SET city = :city WHERE id_agency = :id");
             return $stmt->execute([
-                ':id_agency' => $id_agency,
+                ':id' => $id,
                 ':city' => $data['city']
             ]);
         }

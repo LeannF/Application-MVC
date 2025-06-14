@@ -15,6 +15,15 @@
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
+        public function getUserById($id){
+            
+            $stmt = $this->db->prepare("SELECT firstname, lastname, phonenumber, email FROM user WHERE id_user = :id");
+            
+            $stmt->execute([':id' => $id]);
+       
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } 
+        
         public function getUserByEmail(string $email): array|false {
             $stmt = $this->db->prepare("SELECT * FROM user WHERE email = :email");
             $stmt->execute([':email' => $email]);

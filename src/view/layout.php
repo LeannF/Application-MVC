@@ -9,10 +9,16 @@
     </head>
     <body>
         <header>
-            <?php require_once __DIR__ . '/navbar.php';?>
+            <?php require_once __DIR__ . '/components/navbar.php';?>
         </header>
         <main class="text-center">
            <?php
+                use App\helper\Flash;
+
+                $ridesWithUsers = $ridesWithUsers ?? [];
+                $rides = $rides ?? [];
+                $users = $users ?? [];
+                Flash::display();
                 if (isset($view)) {
                     if (file_exists($view)) {
                         include $view;
@@ -24,7 +30,8 @@
                 }
             ?>
         </main>
-        <footer class="position-absolute bottom-50 translate-middle">© 2024 - CENEF - MVC PHP</footer>
+        <footer class="position-absolute start-50 translate-middle mt-4">© 2024 - CENEF - MVC PHP</footer>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/js/script.js"></script>
     </body>
 </html>

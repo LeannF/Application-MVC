@@ -1,7 +1,7 @@
 <div>
     <h2>Pour obtenir plus d'informations sur un trajet, veuillez vous connecter</h2>
     <table>
-        <thead class="bg-dark">
+        <thead>
             <tr>
                 <td>Départ</td>
                 <td>Date</td>
@@ -9,7 +9,7 @@
                 <td>Destination</td>
                 <td>Date</td>
                 <td>Heure</td>
-                <td>Places</td>
+                <td>Places disponibles</td>
             </tr>
         </thead>
         <tbody>       
