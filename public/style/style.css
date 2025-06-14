@@ -12,18 +12,30 @@ h2 {
 }
 
 nav {
+  background-color: #f1f8fc;
   border: 1px solid black;
   margin: 2em;
 }
 
-.table-btn {
-  background-color: none;
-  color: none;
+ul h2 {
+  font-size: 1.5em;
 }
 
-button {
+table {
+  width: 100%;
+}
+
+table tr:nth-child(even) {
+  background-color: #f1f8fc;
+}
+
+button, .btn {
   color: white;
-  background-color: black;
+}
+
+button:hover, .btn:hover {
+  background-color: #00497c;
+  color: black;
 }
 
 a {
@@ -32,9 +44,17 @@ a {
   color: white;
 }
 
-table {
-  width: 90%;
-  margin: auto;
+.table-section {
+  display: none;
+}
+
+.table-section.active {
+  display: table;
+  width: 100%;
+}
+
+.table-section table {
+  width: 100%;
   margin-top: 2em;
 }
 
@@ -44,12 +64,8 @@ table, th, td {
 }
 
 thead {
-  background-color: black;
+  background-color: #00497c;
   color: white;
-}
-
-#users, #agencies {
-  display: none;
 }
 
 .nav-btn.active {

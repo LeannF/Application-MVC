@@ -57,7 +57,6 @@
                     header('Location: /');  /** Redirect to home page */
                     exit;
                 } else {
-                    // Gérer l’erreur (par exemple stocker un message dans $_SESSION ou autre)
                     $_SESSION['error'] = "Email ou mot de passe incorrect";
                     header('Location: /');  
                     exit;

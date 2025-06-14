@@ -55,11 +55,9 @@ CREATE TABLE IF NOT EXISTS `user` (
     `phonenumber` VARCHAR(20) NOT NULL,
     `email` VARCHAR(50) NOT NULL,
     `password` VARCHAR(100) NOT NULL,
-    `role` ENUM('admin', 'employee') DEFAULT 'guest',
-    `id_ride` INT,
+    `role` ENUM('admin', 'employee', 'guest') DEFAULT 'guest',
     PRIMARY KEY (`id_user`),
     KEY `lastname` (`lastname`),
-    FOREIGN KEY (`id_ride`) REFERENCES ride(`id_ride`) ON DELETE CASCADE,
     UNIQUE KEY `email` (`email`),
     UNIQUE KEY `phonenumber` (`phonenumber`)
 );

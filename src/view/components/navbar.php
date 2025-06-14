@@ -10,17 +10,17 @@
         switch ($role) {
             case 'admin':
                 ?>
-                <ul class="d-flex">
-                    <button type="button" class="nav-btn" data-bs-toggle="button" onClick="showTable('users')">Utilisateurs</button>
-                    <button type="button" class="nav-btn" data-bs-toggle="button" onClick="showTable('agencies')">Agences</button>
-                    <button type="button" class="nav-btn active" data-bs-toggle="button"  onClick="showTable('rides')">Trajets</button>
+                <ul class="d-flex end-0 ">
+                    <button class="btn nav-btn mx-2" data-bs-toggle="button" onClick="showTable('users')">Utilisateurs</button>
+                    <button class="btn nav-btn mx-2" data-bs-toggle="button" onClick="showTable('agencies')">Agences</button>
+                    <button class="btn nav-btn active mx-2" data-bs-toggle="button"  onClick="showTable('rides')">Trajets</button>
                     <?php if (isset($_SESSION['user'])): ?>
-                        <h2 class="end-0">
+                        <h2 class="mx-4">
                             Bonjour <?= htmlspecialchars($_SESSION['user']['firstname']) ?>
                             <?= htmlspecialchars($_SESSION['user']['lastname']) ?>
                         </h2>
                     <?php endif; ?>
-                    <a class='btn btn-dark position-absolute end-0 m-2' href='/logout'>Déconnexion</a>
+                    <a class='position-absolute end-0 mx-3' href='/logout'><button class="btn">Déconnexion</button></a>
                 </ul>              
                 <?php
             break;
@@ -28,21 +28,21 @@
             case 'employee':
                 ?>
                 <ul class="d-flex">
-                    <button class="mx-5" data-bs-toggle='modal' data-bs-target='#createRideModal'>Créer un trajet</button>
+                    <button class="btn mx-5" data-bs-toggle='modal' data-bs-target='#createRideModal'>Créer un trajet</button>
                     <?php if (isset($_SESSION['user'])): ?>
-                        <h2 class="end-0">
+                        <h2 class="mx-4">
                             Bonjour <?= htmlspecialchars($_SESSION['user']['firstname']) ?>
                             <?= htmlspecialchars($_SESSION['user']['lastname']) ?>
                         </h2>
                     <?php endif; ?>
-                    <a class='btn btn-dark position-absolute end-0 m-2' href='/logout'>Déconnexion</a>
+                    <a class='position-absolute end-0 mx-2' href='/logout'><button class="btn">Déconnexion</button></a>
                     </ul>          
                 <?php
             break;
 
             case 'guest':
                 ?>
-                    <button data-bs-toggle='modal' data-bs-target='#loginModal' class='position-absolute end-0 m-2'>Connexion</button>
+                    <button data-bs-toggle='modal' data-bs-target='#loginModal' class='btn position-absolute end-0 mx-2'>Connexion</button>
                 <?php
             break;
         }

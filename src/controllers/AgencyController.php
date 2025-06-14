@@ -39,7 +39,7 @@
                     Flash::set('success', 'Ville ajoutée avec succès !');
                     exit;
                 } else {
-                    echo "Error during adding agency";
+                    Flash::set('fail', "Erreur lors de l'ajout d'une ville !");
                 }               
             }     
         }
@@ -61,7 +61,7 @@
                 Flash::set('success', 'Ville modifiée avec succès !');
             } else {
                 http_response_code(500);
-                echo json_encode(['message' => 'Failed to edit Agency']);
+                Flash::set('fail', 'Erreur lors de la modification de la ville !');
             }
         }
 
@@ -74,7 +74,7 @@
                     header('Location: /');
                     Flash::set('success', 'Ville supprimée avec succès !');
                 } else {
-                    echo "Erreur lors de la suppression";
+                    Flash::set('fail', 'Erreur lors de la suppression de la ville !');
                 }
                 exit;
             }         
