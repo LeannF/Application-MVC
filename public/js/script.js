@@ -2,10 +2,10 @@
 function showTable(id) {
   const tables = document.querySelectorAll('.table-section');
   tables.forEach(table => {
-    table.style.display = 'none';
+    table.classList.remove('active');
   });
 
-  document.getElementById(id).style.display = 'block';
+  document.getElementById(id).classList.add('active');
 }
 
 /** function to change the active button on click */

@@ -1,6 +1,6 @@
 <div>
     <h2>Pour obtenir plus d'informations sur un trajet, veuillez vous connecter</h2>
-    <table>
+    <table class="m-auto">
         <thead>
             <tr>
                 <td>Départ</td>

@@ -2,7 +2,7 @@
 
 <div>
     <h2>Tableau de bord de l’administrateur</h2>
-    <table id="rides" class="table-section">
+    <table id="rides" class="table-section active">
         <thead>
             <tr>
                 <td>Départ</td>
@@ -38,7 +38,7 @@
 </div>
 
 <div id="agencies" class="table-section">
-    <button data-bs-toggle='modal' data-bs-target='#createAgencyModal'>Ajouter une ville</button>
+    <button class="btn add-btn" data-bs-toggle='modal' data-bs-target='#createAgencyModal'>Ajouter une ville</button>
     <table>
         <thead>
             <tr>

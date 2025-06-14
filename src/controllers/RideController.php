@@ -58,10 +58,10 @@
                     'available_seat' => $_POST['available_seat']
                 ];
 
-                // Validation arrival date/hour > departure date/hour 
+                // Ensure arrival > departure (date & time) 
                 if ($data['id_agency_departure'] === $data['id_agency_arrival']) {
                         http_response_code(400);
-                        echo json_encode(['message' => 'Departure city and arrival city must be different']);
+                        Flash::set('fail', 'Departure city and arrival city must be different');                        
                         return;
                     }
 
@@ -70,13 +70,13 @@
 
                 if ($arrivalDateTime <= $departureDateTime) {
                     http_response_code(400);
-                    echo json_encode(['message' => 'Date and arrival time must be before after date and arrival time']);
+                    Flash::set('fail', 'Date and arrival time must be after date and arrival time');
                     return;
                 }       
 
                 $succes = $this->rideModel->addRide($data);
                 if ($succes) {
-                    Flash::set('success', 'Ride ajoutée avec succès !');
+                    Flash::set('success', 'Trajet ajoutée avec succès !');
                     header("Location: /");
                     exit;
                 } else {
@@ -85,7 +85,7 @@
             }    
         }
 
-        /** edit ride only with user's modifications */
+        /** Update the ride only with fields modified by the user */
         public function editRide(){            
             $possibleFields = [
                 'id_agency_departure',
@@ -104,7 +104,7 @@
             }
             $id = $_POST['id_ride'] ?? null;
 
-            // Vérifie que les 4 champs sont là AVANT de créer les variables et faire la comparaison
+            // Make sure all fields exist before creating the variable
             if (
                 isset($data['departure_date'], $data['departure_time'], $data['arrival_date'], $data['arrival_time'])
             ) {
@@ -113,7 +113,7 @@
 
                 if ($arrivalDateTime <= $departureDateTime) {
                     http_response_code(400);
-                    echo json_encode(['message' => "La date/heure d'arrivée doit être après la date/heure de départ."]);
+                    Flash::set('fail', 'Date and arrival time must be after date and arrival time');
                     return;
                 }
             }
@@ -136,7 +136,7 @@
                 exit;
             } else {
                 http_response_code(500);
-                echo json_encode(['message' => 'Failed to update ride']);
+                Flash::set('fail', 'Erreur lors de la modification');
             }
         }
 
@@ -150,7 +150,7 @@
                     header('Location: /');
                     exit;
                 } else {
-                    echo "Erreur lors de la suppression";
+                    Flash::set('fail', 'Erreur lors de la suppression');
                 }
                 exit;
             }
