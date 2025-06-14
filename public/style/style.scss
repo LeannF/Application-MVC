@@ -44,19 +44,19 @@ table, th, td {
   border-collapse: collapse;  
 }
 
-td{
-  padding: 0.2em 0 0.2em;
-}
-
 thead{
   background-color: black;
   color: white;
 }
 
-label{
-  text-align: start;
+#users, #agencies{
+  display: none;
 }
 
-#rides table{
-  width: 100%;
+.nav-btn.active{
+  background-color: #0074c7;
+}
+
+button, .btn{
+  background-color: #00497c;
 }

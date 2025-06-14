@@ -3,6 +3,7 @@
     namespace App\Controllers;
     use App\Config\Database;
     use App\Models\AgencyModel;
+    use App\helper\Flash;
 
     /**
      * controller for the agency's table
@@ -18,14 +19,8 @@
         }
 
         public function getAgencies(){
-
-            /** call the model */
             $agencies = $this->agencyModel->getAllAgency(); 
-
-            /** HTTP response */
             header('Content-Type: application/json'); 
-
-            /** sendind data to the client */
             echo json_encode($agencies);
         }
 
@@ -41,6 +36,7 @@
                 $success = $this->agencyModel->addAgency($data);
                 if ($success) {
                     header("Location: /");
+                    Flash::set('success', 'Ville ajoutée avec succès !');
                     exit;
                 } else {
                     echo "Error during adding agency";
@@ -59,10 +55,10 @@
             }
 
             $data = ['city' => $city];
-
-             
+          
             if ($this->agencyModel->editAgency($id, $data)) {
                 header('Location: /');
+                Flash::set('success', 'Ville modifiée avec succès !');
             } else {
                 http_response_code(500);
                 echo json_encode(['message' => 'Failed to edit Agency']);
@@ -76,6 +72,7 @@
 
                 if ($success) {
                     header('Location: /');
+                    Flash::set('success', 'Ville supprimée avec succès !');
                 } else {
                     echo "Erreur lors de la suppression";
                 }

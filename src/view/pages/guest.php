@@ -9,7 +9,7 @@
                 <td>Destination</td>
                 <td>Date</td>
                 <td>Heure</td>
-                <td>Places</td>
+                <td>Places disponibles</td>
             </tr>
         </thead>
         <tbody>       

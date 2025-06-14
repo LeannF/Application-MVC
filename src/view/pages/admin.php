@@ -11,7 +11,7 @@
                 <td>Destination</td>
                 <td>Date</td>
                 <td>Heure</td>
-                <td>Places</td>
+                <td>Places disponibles</td>
                 <td></td>
             </tr>
         </thead>
@@ -37,7 +37,7 @@
     </table>
 </div>
 
-<div id="agencies" class="table-section" style="display: none;">
+<div id="agencies" class="table-section">
     <button data-bs-toggle='modal' data-bs-target='#createAgencyModal'>Ajouter une ville</button>
     <table>
         <thead>
@@ -65,7 +65,7 @@
     </table>
 </div>
 
-<div  id="users" class="table-section" style="display: none;">
+<div  id="users" class="table-section">
     <table>
         <thead>
             <tr>

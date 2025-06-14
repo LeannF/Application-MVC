@@ -11,9 +11,9 @@
             case 'admin':
                 ?>
                 <ul class="d-flex">
-                    <button data-bs-toggle="button" onClick="showTable('users')">Utilisateurs</button>
-                    <button data-bs-toggle="button" onClick="showTable('agencies')">Agences</button>
-                    <button data-bs-toggle="button" aria-pressed="true" onClick="showTable('rides')">Trajets</button>
+                    <button type="button" class="nav-btn" data-bs-toggle="button" onClick="showTable('users')">Utilisateurs</button>
+                    <button type="button" class="nav-btn" data-bs-toggle="button" onClick="showTable('agencies')">Agences</button>
+                    <button type="button" class="nav-btn active" data-bs-toggle="button"  onClick="showTable('rides')">Trajets</button>
                     <?php if (isset($_SESSION['user'])): ?>
                         <h2 class="end-0">
                             Bonjour <?= htmlspecialchars($_SESSION['user']['firstname']) ?>

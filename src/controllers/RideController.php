@@ -3,6 +3,7 @@
     namespace App\Controllers;
     use App\Config\Database;
     use App\Models\RideModel;
+    use App\helper\Flash;
 
     /**
      * controller for the ride's table
@@ -57,13 +58,13 @@
                     'available_seat' => $_POST['available_seat']
                 ];
 
+                // Validation arrival date/hour > departure date/hour 
                 if ($data['id_agency_departure'] === $data['id_agency_arrival']) {
                         http_response_code(400);
                         echo json_encode(['message' => 'Departure city and arrival city must be different']);
                         return;
                     }
 
-                    // Validation date/heure arrivée > date/heure départ
                     $departureDateTime = strtotime($data['departure_date'] . ' ' . $data['departure_time']);
                     $arrivalDateTime = strtotime($data['arrival_date'] . ' ' . $data['arrival_time']);
 
@@ -71,11 +72,11 @@
                     http_response_code(400);
                     echo json_encode(['message' => 'Date and arrival time must be before after date and arrival time']);
                     return;
-                }
-                
+                }       
 
                 $succes = $this->rideModel->addRide($data);
                 if ($succes) {
+                    Flash::set('success', 'Ride ajoutée avec succès !');
                     header("Location: /");
                     exit;
                 } else {
@@ -84,6 +85,7 @@
             }    
         }
 
+        /** edit ride only with user's modifications */
         public function editRide(){            
             $possibleFields = [
                 'id_agency_departure',
@@ -102,20 +104,18 @@
             }
             $id = $_POST['id_ride'] ?? null;
 
-            if ($data['id_agency_departure'] === $data['id_agency_arrival']) {
-                http_response_code(400);
-                echo json_decode(['message' => "Departure city and arrival city must be different"]);
-                return;
-            }
+            // Vérifie que les 4 champs sont là AVANT de créer les variables et faire la comparaison
+            if (
+                isset($data['departure_date'], $data['departure_time'], $data['arrival_date'], $data['arrival_time'])
+            ) {
+                $departureDateTime = strtotime($data['departure_date'] . ' ' . $data['departure_time']);
+                $arrivalDateTime = strtotime($data['arrival_date'] . ' ' . $data['arrival_time']);
 
-            // Validation date/heure arrivée > date/heure départ
-            $departureDateTime = strtotime($data['departure_date'] . ' ' . $data['departure_time']);
-            $arrivalDateTime = strtotime($data['arrival_date'] . ' ' . $data['arrival_time']);
-
-            if ($arrivalDateTime <= $departureDateTime) {
-                http_response_code(400);
-                echo json_decode(['message' => "Date and arrival time must be before after date and arrival time"]);
-                return;
+                if ($arrivalDateTime <= $departureDateTime) {
+                    http_response_code(400);
+                    echo json_encode(['message' => "La date/heure d'arrivée doit être après la date/heure de départ."]);
+                    return;
+                }
             }
 
             if (!$id) {
@@ -131,7 +131,9 @@
             }
 
             if ($this->rideModel->editRide($id, $data)) {
+                Flash::set('success', 'Trajet modifiée avec succès !');
                 header("Location: /");
+                exit;
             } else {
                 http_response_code(500);
                 echo json_encode(['message' => 'Failed to update ride']);
@@ -144,7 +146,9 @@
                 $success = $this->rideModel->deleteRideById($id);
 
                 if ($success) {
+                    Flash::set('success', 'Trajet supprimée avec succès !');
                     header('Location: /');
+                    exit;
                 } else {
                     echo "Erreur lors de la suppression";
                 }
